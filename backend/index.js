@@ -3,6 +3,16 @@ const pool = require('./db');
 const app = express();
 const PORT = 3000;
 
+// Startsida
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>Välkommen till CV-applikationen! 🚀</h1>
+    <p>Besök <a href="/cv">/cv</a> för att se innehåll i databasen.</p>
+    <p>Besök <a href="/about">/about</a> för info om applikationen.</p>
+  `);
+});
+
+// Hämta alla CV-poster
 app.get('/cv', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM cv');
@@ -13,7 +23,7 @@ app.get('/cv', async (req, res) => {
   }
 });
 
-// ✅ NY ENDPOINT
+// Info om applikationen
 app.get('/about', (req, res) => {
   res.json({
     app: 'CV-applikation',
@@ -22,7 +32,8 @@ app.get('/about', (req, res) => {
   });
 });
 
+// Starta servern
 app.listen(PORT, () => {
-  console.log(`Servern körs på http://localhost:${PORT}`);
+  console.log(`✅ Servern körs på http://localhost:${PORT}`);
 });
 
